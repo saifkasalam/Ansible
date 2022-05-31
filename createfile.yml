@@ -1,0 +1,10 @@
+---
+- name: Create file in Remote System
+  hosts: all
+  become: true
+  tasks: 
+   - name: Cretae file in RHEL
+     file: 
+        path: /home/ansadmin/dir
+        state: directory 
+

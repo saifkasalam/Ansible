@@ -1,0 +1,14 @@
+---
+- name: Uninstall HTTPS in RHEL
+  hosts: rhel
+  become: true
+  tasks:
+    - name: stop http service
+      service: 
+       name: httpd
+       state: stopped
+
+    - name: uninstall http service
+      yum:
+       name: httpd
+       state: absent

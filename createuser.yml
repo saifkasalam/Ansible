@@ -1,0 +1,8 @@
+---
+- name: Create User in RHEL
+  hosts: all
+  become: true
+  tasks:
+   - name: create user ertugul
+     user: name=ertugul
+

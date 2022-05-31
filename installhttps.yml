@@ -1,0 +1,14 @@
+---
+- name: Install HTTP in Rhel
+  hosts: rhel
+  become: true
+  tasks:
+   - name: Install httpd in RHEL
+     yum:
+      name: httpd
+      state: installed
+    
+   - name: start httpd service     
+     service: 
+       name: httpd
+       state: started 

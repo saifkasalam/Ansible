@@ -1,0 +1,29 @@
+---
+- name: Install HTTP in Rhel
+  hosts: all
+  become: true
+  tasks:
+   - name: stop http in Rhel
+     service:
+      name: httpd
+      state: stopped
+     when: ansible_os_family == "RedHat"
+
+   - name: remove http in Rhel
+     yum: 
+       name: httpd
+       state: installed 
+     when: ansible_os_family == "RedHat"
+
+   - name: stop apache2 in ubuntu
+     service:
+       name: apache2
+       state: stopped
+     when: ansible_os_family == "Debian"
+
+   - name: Remove apache in ubuntu
+     apt:
+       name: apache2
+       state: absent
+     when: ansible_os_family == "Debian"
+

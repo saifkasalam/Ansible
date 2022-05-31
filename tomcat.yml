@@ -1,0 +1,38 @@
+---
+- name: Setup Tomcat on RHEL and Ubuntu
+  hosts: all
+  become: true
+  tasks:
+   - name: Install Java on RHEL
+     yum:
+       name: java
+       state: installed
+     when: ansible_os_family == "RedHat"
+
+   - name: Install java on Ubuntu
+     apt:
+       name: default-jdk
+       state: present
+     when: ansible_os_family == "Debian"
+
+   - name: Download Tomcat from web
+     get_url:
+       url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.62/bin/apache-tomcat-9.0.62.tar.gz
+       dest: /opt
+
+   - name: Unzip Tar file
+     unarchive: 
+       src: /opt/apache-tomcat-9.0.62.tar.gz
+       dest: /opt
+       remote_src: yes
+
+   - name: Give Permission to startup.sh
+     file:
+       path: /opt/apache-tomcat-9.0.62/bin/startup.sh
+       mode: 0777
+
+   - name: start tomcat
+     shell: nohup ./startup.sh
+     args:
+       chdir: /opt/apache-tomcat-9.0.62/bin
+

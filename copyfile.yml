@@ -1,0 +1,9 @@
+---
+- name: copy file to remote computer
+  hosts: all
+  become: true
+  tasks:
+    - name: copy file to remote computer
+      copy:
+        src: /home/ansadmin/ansible/playbook/index.html
+        dest: /home/ansadmin/index.html

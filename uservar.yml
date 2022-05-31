@@ -1,0 +1,10 @@
+---
+- name: Create User using variable
+  hosts: all
+  become: true
+  vars_files:
+    - /home/ansadmin/ansible/playbook/user.yml  
+  tasks:
+    - name: Creating User {{myuser}}
+      user:
+        name: "{{myuser}}"

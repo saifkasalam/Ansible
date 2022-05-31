@@ -1,0 +1,9 @@
+---
+- name: Install Package in Rhel
+  hosts: all
+  become: true
+  tasks:
+    - name: install git in Rhel
+      yum:
+       name: git
+       state: installed
