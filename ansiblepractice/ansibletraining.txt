@@ -1,0 +1,126 @@
+ANSIBLE:
+
+This tool used to automate Configuration Management, application Deployment, Provisioning VM/Containers
+
+
+Components of Ansible:
+
+Inventory:
+It is a file in which you should include the managed nodes IP or Hostnames.
+Without including the hosts in this file you cannot manage the Nodes.
+
+default inventory file: /ets/ansible/hosts
+
+Playbooks:
+Ordered list of tasks.
+Playbooks are the .yml files which actually contains the actual tasks to be run on the managed nodes.  
+
+Modules:
+A Module is a reusable, standalone script that Ansible runs on your behalf, Module interacts with remoteor local machine 
+or remote machines to perform specific tasks
+
+-creating users -Installing packages -Updating Configurations -Spinning Up Instances...etc
+
+Managed nodes: 
+The nodes which we manage through ansible ( Client nodes)
+
+Tasks:
+The unit of action in Ansible.
+
+
+LAB Setup:
+
+Control Node:AMAZON LINUX
+
+1. Create a Amazon linux ec2 instance
+2. Create a user ansadmin/add to sudoer file/enable Password based authentication/rename hostname.
+3. Install Ansible through pip. ( sudo pip install ansible)
+4. Create folder ansible in /etc and create ansible.cfg/hosts file in it.
+
+Managed Node:RHEL
+
+1. Create RHEL ec2 intsnance.
+2. create user ansadmin add to sudoer/enable password based authentication/rename hostname.
+3. ssh-keygen, ssh-copy-id user@host
+4. Add rhel-node1 to hosts file.
+5. Try Adhoc commands with the modules ( Ping,command,stat,file,yum,user)
+
+
+->Inventory File:
+Default invertory file is specified in default ansible configuration file /etc/ansible/ansible.cfg
+you can change the default inventory file in the configuration file or you can specify using "-i".
+
+->Ansible Configuration File:
+
+By Default /etc/ansible/ansible.cfg
+priority
+
+1st environment variables if set
+2nd current working directory
+3rd Home Directory
+4th /etc/ansible/ansible.cfg  
+
+Explain with examples
+
+
+DAY2:
+
+-> Create a simple playbook for creating a user
+-> Create a playbook to install packages in RHEL
+
+* below in the sample playbook for package installation
+
+---
+- name: instal pacjake in RHEL
+  hosts: all
+  become: true
+  tasks:
+   -name: install packages in Rhel
+     yum:
+      name: <package name>
+      state: installed
+
+-> Create a playbook to create files/directories in managed nodes
+-> Create a playbook to copy file to a remote managed host
+-> Create playbook to install Apache in RHEl and Start the service
+-> Create playbook to stop Apache service and remove Apache from managed node
+-> Create playbook to install Apache and start Service in Ubuntu Machine
+
+DAY3:
+
+-> Explain gather facts "ansible -m setup all"
+-> Create Single playbook for both rhel and ubuntu using "When Condition" (ansible_os_family)
+-> Add copy index.html to two servers and provide '666' permission
+
+-> Notify and Handlers in playbook
+(Only run start service if package installation is done)
+
+-> Ansible Variabes
+ - Define within playbook
+ - passing from external file
+ - passing while running playbooks
+
+-> Convert Shell Commands into a Ansible Playbook
+
+ - Playbook: To setup Tomcat
+ - task1: Install java/default-jdk ( yum/apt )
+ - Download tomcat packagees ( get-url )https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.62/bin/apache-tomcat-9.0.62.tar.gz 
+ - untar tomcat ( unarchive/remote_src )
+ - 0777 permission to startup.sh ( file )
+ - Start tomcat using startup.sh ( shell )
+ 
+DAY4
+
+-> Using tags in Playbooks
+ - tags: install_apache / tags: start_apache ( Add below the tasks)
+ - tags can be called while running playbooks with --tags "install_apache"
+
+-> Error Handling in Playbook
+ - ignore_errors: yes ( Add below a tast, Ansible will ignore errors and continue with next task)
+
+-> Ansible Vault
+ - ansible-vault create abc.yml ( create a vault file in encrypted format )
+ - ansible-vault view abc.yml   ( view data of encrypted file )
+ - ansible-vault edit abc.yml    ( edit encrypted file )
+ - ansible-vault encrypt abc.yml ( covert an exiting file to encrypted format )
+ - ansible-vault decrypt abc.yml ( decrypt an encrypted file )
