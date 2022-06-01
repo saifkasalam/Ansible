@@ -1,0 +1,17 @@
+---
+
+- name: Disable CDP
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: Disable CDP on both routers
+      ios_config:
+        authorize: yes
+        lines:
+          - no cdp run
+    
+    - name: Save running-config
+      ios_config:
+        save_when: modified  

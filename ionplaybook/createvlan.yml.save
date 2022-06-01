@@ -1,0 +1,25 @@
+---
+
+- name: Switch specific config  hosts: S1, S2
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: david
+      password: cisco
+
+  tasks:
+    - name: Create VLANs
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        lines:
+          - vlan 2
+          - vlan 3
+          - vlan 4
+          - vlan 5
+
+      register: print_output
+
+    -  debug: var=print_output

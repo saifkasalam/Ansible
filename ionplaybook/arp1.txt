@@ -1,0 +1,39 @@
+
+PLAY [Get ARP information] *****************************************************************************************************
+
+TASK [show arp] ****************************************************************************************************************
+changed: [R2]
+changed: [R1]
+changed: [R3]
+
+TASK [debug] *******************************************************************************************************************
+ok: [R1] => {
+    "print_output.stdout_lines": [
+        "", 
+        "Protocol  Address          Age (min)  Hardware Addr   Type   Interface", 
+        "Internet  10.10.10.1              -   c200.45aa.0001  ARPA   FastEthernet0/1", 
+        "Internet  10.10.10.99            12   5acf.f849.663d  ARPA   FastEthernet0/1"
+    ]
+}
+ok: [R2] => {
+    "print_output.stdout_lines": [
+        "", 
+        "Protocol  Address          Age (min)  Hardware Addr   Type   Interface", 
+        "Internet  10.10.10.2              -   c201.45aa.0001  ARPA   FastEthernet0/1", 
+        "Internet  10.10.10.99            12   5acf.f849.663d  ARPA   FastEthernet0/1"
+    ]
+}
+ok: [R3] => {
+    "print_output.stdout_lines": [
+        "", 
+        "Protocol  Address          Age (min)  Hardware Addr   Type   Interface", 
+        "Internet  10.10.10.3              -   c202.45aa.0001  ARPA   FastEthernet0/1", 
+        "Internet  10.10.10.99            12   5acf.f849.663d  ARPA   FastEthernet0/1"
+    ]
+}
+
+PLAY RECAP *********************************************************************************************************************
+R1                         : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+R2                         : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+R3                         : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

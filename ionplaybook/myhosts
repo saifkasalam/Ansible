@@ -1,0 +1,2 @@
+[default]
+l1-as1 ansible_ssh_user=admin

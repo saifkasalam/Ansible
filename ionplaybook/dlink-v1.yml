@@ -1,0 +1,62 @@
+---
+- name: Dlink  Standard Configuration
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+     
+# Configuring..... 
+# Hostname
+# Enabling Spanning Tree
+# Disabling Telnet
+# Disabling HTTP
+# Configuring NTP Services
+# Creating User
+# Creating VLAN10 for LAN1
+
+  tasks:
+    - name: Dlink  Global Settings
+      ios_config:
+        lines:
+          - snmp-server name {{inventory_hostname}}
+          - spanning-tree global state enable
+          - no ip telnet server
+          - no ip http server
+          - clock timezone + 5 30
+          - sntp enable
+          - sntp server 10.90.90.100
+          - username test password admin123
+          - username test privilege 15
+         
+      register: print_output
+
+    -  debug: var=print_output
+
+ # Configuring...
+ # Changing ports mode to access
+ # Confguring Switch-port Security
+ # Making Access ports Member of VLAN 10
+
+    - name: Access port configuration
+      ios_config:
+        parents: interface range ethernet 1/0/10-20
+        lines:
+           - switchport mode access
+           - switchport port-security
+           - switchport port-security maximum 1
+           - switchport port-security mode permanent
+           - switchport port-security violation protect
+           - switchport access vlan 10         
+      
+      register: print_output
+
+    -  debug: var=print_output
+
+ 
+    - name: Save running-config
+      ios_config:            
+        save_when: modified  
+
+
+      register: print_output
+
+    -  debug: var=print_output

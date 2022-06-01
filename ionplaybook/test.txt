@@ -1,0 +1,34 @@
+
+PLAY [Manage GNS3 devices] *****************************************************************************************************
+
+TASK [enable ospf] *************************************************************************************************************
+changed: [R1]
+
+TASK [debug] *******************************************************************************************************************
+ok: [R1] => {
+    "print_output": {
+        "banners": {}, 
+        "changed": true, 
+        "commands": [
+            "interface fastEthernet 0/0", 
+            "ip address 192.168.1.1  255.255.255.0", 
+            "no shut"
+        ], 
+        "deprecations": [
+            {
+                "msg": "Param 'auth_pass' is deprecated. See the module docs for more information", 
+                "version": 2.9
+            }
+        ], 
+        "failed": false, 
+        "updates": [
+            "interface fastEthernet 0/0", 
+            "ip address 192.168.1.1  255.255.255.0", 
+            "no shut"
+        ]
+    }
+}
+
+PLAY RECAP *********************************************************************************************************************
+R1                         : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

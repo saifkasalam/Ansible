@@ -1,0 +1,34 @@
+---
+- name: Dlink DGS-1510-28 Standard Configuration
+  hosts: routers
+  gather_facts: false
+  connection: network_cli
+  
+
+ # vars:
+   # cli:
+     # username: admin
+     # password: admin
+      
+  tasks:
+    - name: Dlink DGS-1510-28 Global Settings
+      ios_config:
+       # provider: "{{ cli }}"
+        authorize: yes
+        lines:
+          - sh ip int brief
+          
+      register: print_output
+
+    -  debug: var=print_output
+
+   
+    - name: Save running-config
+      ios_config:
+        authorize: yes           
+        save_when: modified  
+
+
+      register: print_output
+
+    -  debug: var=print_output

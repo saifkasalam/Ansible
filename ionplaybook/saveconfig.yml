@@ -1,0 +1,16 @@
+---
+ - name: Dlink DGS-1510-28 Standard Configuration
+   hosts: all
+   gather_facts: false
+   connection: network_cli
+
+
+   tasks:
+    - name: Disable CDP on both routers
+      ios_config:
+        lines:
+          - snmp-server name {{inventory_hostname}}
+    
+    - name: Save running-config
+      ios_config:
+        save_when: always  

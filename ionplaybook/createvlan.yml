@@ -1,0 +1,25 @@
+---
+- name: Switch specific config
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: admin
+      password: admin
+
+  tasks:
+    - name: Create VLANs
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        lines:
+          - no vlan 2
+          - no vlan 3
+          - no vlan 4
+          - no vlan 5
+
+      register: print_output
+
+    -  debug: var=print_output

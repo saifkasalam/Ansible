@@ -1,0 +1,30 @@
+---
+- name: Dlink DGS-1510-28 Standard Configuration
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: admin
+      password: admin
+
+  tasks:
+    - name: Dlink DGS-1510-28 Global Settings
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        lines:
+          - snmp-server name {{inventory_hostname}}
+          - spanning-tree global state enable
+          - no ip telnet server
+          - no ip http server
+          - clock timezone + 5 30
+          - sntp enable
+          - sntp server 10.90.90.100
+          
+      register: print_output
+
+    -  debug: var=print_output
+
+

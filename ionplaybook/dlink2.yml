@@ -1,0 +1,48 @@
+---
+- name: Dlink DGS-1510-28 Standard Configuration
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: admin
+      password: admin
+
+  tasks:
+    - name: Dlink DGS-1510-28 Global Settings
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        lines:
+          - snmp-server name {{inventory_hostname}}
+          - spanning-tree global state enable
+          - no ip telnet server
+          - no ip http server
+          - clock timezone + 5 30
+          - sntp enable
+          - sntp server 10.90.90.100
+          
+      register: print_output
+
+    -  debug: var=print_output
+
+ 
+    - name: Interface settings
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents: interface range ethernet 1/0/10-20
+        lines:
+           - switchport mode access
+           - switchport port-security
+           - switchport port-security maximum 1
+           - switchport port-security mode permanent
+           - switchport port-security violation protect         
+      
+      
+      register: print_output
+
+    -  debug: var=print_output
+
+ 

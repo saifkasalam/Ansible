@@ -1,0 +1,23 @@
+---
+- name: Manage GNS3 devices
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: admin
+      password: admin
+
+  tasks:
+    - name: Saif Testing
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents:
+          - no vlan 100
+            
+      register: print_output
+
+    -  debug: var=print_output
+

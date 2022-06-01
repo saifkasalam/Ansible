@@ -1,0 +1,53 @@
+---
+- name: Dlink DGS-1510-28 Standard Configuration
+  hosts: as
+  gather_facts: false
+  connection: network_cli
+     
+# Configuring..... 
+# Hostname
+# Enabling Spanning Tree
+# Disabling Telnet
+# Disabling HTTP
+# Configuring NTP Services
+# Creating User
+
+
+  tasks:
+    - name: Dlink DGS-1510-28 Global Settings
+      ios_config:
+        lines:
+          - snmp-server name {{inventory_hostname}}
+          - spanning-tree global state enable
+          - no ip telnet server
+          - no ip http server
+          - clock timezone + 5 30
+          - sntp enable
+          - sntp server 10.90.90.100
+          - username nis password admin123
+          - username nis privilege 15
+          
+      register: print_output
+
+    -  debug: var=print_output
+
+ # Configuring...
+ # Changing ports mode to access
+ # Confguring Switch-port Security
+
+    - name: Port-Security configuration
+      ios_config:
+        parents: interface range ethernet 1/0/10-20
+        lines:
+           - switchport mode access
+           - switchport port-security
+           - switchport port-security maximum 1
+           - switchport port-security mode permanent
+           - switchport port-security violation protect
+                    
+      
+      register: print_output
+
+    -  debug: var=print_output
+
+ 

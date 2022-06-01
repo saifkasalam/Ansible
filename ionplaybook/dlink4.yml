@@ -1,0 +1,4 @@
+---
+- name: configure top level configuration
+  cisco.ios.ios_config:
+    lines: hostname {{ inventory_hostname }}
