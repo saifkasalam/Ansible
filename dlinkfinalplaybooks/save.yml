@@ -1,0 +1,11 @@
+---
+- name: Saving running-config to starup-config
+  hosts: all
+  become: true
+  tasks:
+    - name: run commands that require answering a prompt
+      ios_command:
+       commands:
+       - command: 'copy running-config startup-config'
+         prompt: 'Destination filename startup-config?'
+         answer: 'y'

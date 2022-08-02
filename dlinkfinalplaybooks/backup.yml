@@ -1,0 +1,13 @@
+---
+- name: Run Cisco Commands
+  hosts: all
+  become: true
+  tasks:
+    - name: configurable backup path
+      ios_config:
+       backup: yes
+       backup_options:
+        filename: '{{inventory_hostname}}'
+        dir_path: /home/ion
+        
+
