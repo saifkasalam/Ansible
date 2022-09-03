@@ -1,0 +1,6 @@
+[ion]
+l1-as13
+
+[ion:vars]
+ansible_user=admin
+ansible_connection=local

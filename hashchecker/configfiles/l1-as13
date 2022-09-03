@@ -1,0 +1,322 @@
+[C[C[C[C[C[C[C[C[0Kshow running-config
+Building configuration...
+
+
+
+
+Current configuration : 3587 bytes
+
+
+ 
+
+!-------------------------------------------------------------------------------
+
+!                 DGS-1510-28X Gigabit Ethernet SmartPro Switch
+
+!                                Configuration
+
+!
+
+!                            Firmware: Build 1.70.012
+
+!           Copyright(C) 2020 D-Link Corporation. All rights reserved.
+
+!-------------------------------------------------------------------------------
+
+ 
+
+service password-encryption 7
+
+!
+
+username test password 7 *@&53NJ5aeHy5Op3lEhn0BdLAAAAADYGcPF
+
+username test privilege 15
+
+!
+
+command logging enable
+
+!
+
+no ip http server
+
+!
+
+line console
+
+!
+
+line telnet
+
+!
+
+line ssh
+
+!
+
+spanning-tree mode mstp
+
+spanning-tree global state enable
+
+!
+
+ip ssh server
+
+ssh user admin authentication-method password 
+
+ssh user test authentication-method password 
+
+!
+
+vlan 10,99,199
+
+!
+
+vlan 10
+
+ name LAN1
+
+!
+
+vlan 99
+
+ name test_99
+
+!
+
+vlan 199
+
+ name test_199
+
+!
+
+interface ethernet 1/0/1
+
+ traffic-segmentation forward interface ethernet 1/0/23-1/0/24 
+
+ description ##TEST PORT UPLINK##
+
+ shutdown 
+
+ switchport port-security
+
+ switchport port-security maximum 1
+
+ switchport port-security mode permanent
+
+ switchport port-security violation restrict
+
+!
+
+interface ethernet 1/0/2
+
+ description ##TEST PORT UPLINK##
+
+ shutdown 
+
+!
+
+interface ethernet 1/0/3
+
+ description ##TEST PORT UPLINK##
+
+ shutdown 
+
+!
+
+interface ethernet 1/0/4
+
+ description ##TEST PORT UPLINK##
+
+ shutdown 
+
+!
+
+interface ethernet 1/0/5
+
+ description ##TEST PORT UPLINK##
+
+ shutdown 
+
+!
+
+interface ethernet 1/0/6
+
+ description ##TEST PORT UPLINK##
+
+!
+
+interface ethernet 1/0/7
+
+ description ##TEST PORT UPLINK##
+
+!
+
+interface ethernet 1/0/8
+
+ description ##TEST PORT UPLINK##
+
+!
+
+interface ethernet 1/0/9
+
+ description ##TEST PORT UPLINK##
+
+!
+
+interface ethernet 1/0/10
+
+ description ##TEST PORT UPLINK##
+
+ shutdown 
+
+ switchport port-security
+
+ switchport port-security maximum 10
+
+ switchport port-security mode permanent
+
+ switchport mode access
+
+ switchport access vlan 10
+
+!
+
+interface ethernet 1/0/11
+
+ switchport port-security
+
+ switchport port-security maximum 10
+
+ switchport port-security mode permanent
+
+ switchport mode access
+
+ switchport access vlan 10
+
+!
+
+interface ethernet 1/0/12
+
+ switchport port-security
+
+ switchport port-security maximum 10
+
+ switchport port-security mode permanent
+
+ switchport mode access
+
+ switchport access vlan 10
+
+!
+
+interface ethernet 1/0/13
+
+!
+
+interface ethernet 1/0/14
+
+!
+
+interface ethernet 1/0/15
+
+!
+
+interface ethernet 1/0/16
+
+!
+
+interface ethernet 1/0/17
+
+!
+
+interface ethernet 1/0/18
+
+!
+
+interface ethernet 1/0/19
+
+!
+
+interface ethernet 1/0/20
+
+!
+
+interface ethernet 1/0/21
+
+!
+
+interface ethernet 1/0/22
+
+!
+
+interface ethernet 1/0/23
+
+!
+
+interface ethernet 1/0/24
+
+!
+
+interface ethernet 1/0/25
+
+!
+
+interface ethernet 1/0/26
+
+!
+
+interface ethernet 1/0/27
+
+!
+
+interface ethernet 1/0/28
+
+!
+
+interface Vlan1
+
+ ip address 172.20.2.13 255.255.0.0
+
+!
+
+snmp-server
+
+snmp-server enable traps
+
+snmp-server name l1-as13
+
+snmp-server group dlink v1 read CommunityView write CommunityView notify CommunityView 
+
+snmp-server group dlink v2c read CommunityView write CommunityView notify CommunityView 
+
+snmp-server community dlink  view CommunityView rw 
+
+!
+
+clock timezone + 5 30
+
+sntp enable
+
+sntp server 216.23.59.0
+
+sntp server 10.90.90.100
+
+!
+
+ntp access-group default nomodify noquery 
+
+!
+
+logging buffered severity debugging write-delay 3
+
+logging monitor severity debugging
+
+logging server 172.20.2.110 severity debugging facility 23 port 514
+
+logging server 10.90.90.210 severity debugging facility 23 port 514
+
+!
+
+end

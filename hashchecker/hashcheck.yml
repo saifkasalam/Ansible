@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+    - files.yml 
+  tasks:
+    - name: md5 to calculate checksum
+      stat:
+        path: "{{ item.name }}"
+        checksum_algorithm: md5
+      register: hash_check
+      loop: "{{ files }}"
+
+    - name: Matching the Hash Values
+      debug:
+        msg: |
+          Hash NOT changed: {{ item.0.name }}
+          {{ item.0.hash.split()|first }}
+          {{ item.1 }}
+      with_together:
+        - "{{ files }}"
+        - "{{ hash_check.results|map(attribute='stat.checksum')|list }}"
+      when: item.0.hash.split()|first == item.1
+      
