@@ -1,0 +1,57 @@
+---
+
+    - name: Creating Vlans for AS8
+      ios_config:
+        lines:
+          - vlan 1801-1822
+
+      register: print_output
+
+    -  debug: var=print_output
+
+    - name: Access port configuration
+      ios_config:
+        parents: "interface ethernet 1/0/{{item.port}}"
+        lines:
+           - switchport mode access     
+           - "switchport access vlan {{item.vlan}}"
+           
+      with_items:
+           - { port: 1, vlan: 1801 }       
+           - { port: 2, vlan: 1802 }       
+           - { port: 3, vlan: 1803 }       
+           - { port: 4, vlan: 1804 }       
+           - { port: 5, vlan: 1805 }       
+           - { port: 6, vlan: 1806 }       
+           - { port: 7, vlan: 1807 }       
+           - { port: 8, vlan: 1808 }       
+           - { port: 9, vlan: 1809 }       
+           - { port: 10, vlan: 1810 }       
+           - { port: 11, vlan: 1811 }       
+           - { port: 12, vlan: 1812 }       
+           - { port: 13, vlan: 1813 }       
+           - { port: 14, vlan: 1814 }       
+           - { port: 15, vlan: 1815 }       
+           - { port: 16, vlan: 1816 }       
+           - { port: 17, vlan: 1817 }       
+           - { port: 18, vlan: 1818 }       
+           - { port: 19, vlan: 1819 }       
+           - { port: 20, vlan: 1820 }       
+           - { port: 21, vlan: 1821 }       
+           - { port: 22, vlan: 1822 }       
+              
+      
+      register: print_output
+
+    -  debug: var=print_output
+
+    - name: run commands that require answering a prompt
+      ios_command:
+       commands:
+       - command: 'copy running-config startup-config'
+         prompt: 'Destination filename startup-config?'
+         answer: 'y'
+
+
+      register: print_output
+    -  debug: var=print_output

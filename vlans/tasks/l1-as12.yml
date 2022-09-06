@@ -1,0 +1,57 @@
+---
+
+    - name: Creating Vlans for AS12
+      ios_config:
+        lines:
+          - vlan 2201-2222
+
+      register: print_output
+
+    -  debug: var=print_output
+
+    - name: Access port configuration
+      ios_config:
+        parents: "interface ethernet 1/0/{{item.port}}"
+        lines:
+           - switchport mode access     
+           - "switchport access vlan {{item.vlan}}"
+           
+      with_items:
+           - { port: 1, vlan: 2201 }       
+           - { port: 2, vlan: 2202 }       
+           - { port: 3, vlan: 2203 }       
+           - { port: 4, vlan: 2204 }       
+           - { port: 5, vlan: 2205 }       
+           - { port: 6, vlan: 2206 }       
+           - { port: 7, vlan: 2207 }       
+           - { port: 8, vlan: 2208 }       
+           - { port: 9, vlan: 2209 }       
+           - { port: 10, vlan: 2210 }       
+           - { port: 11, vlan: 2211 }       
+           - { port: 12, vlan: 2212 }       
+           - { port: 13, vlan: 2213 }       
+           - { port: 14, vlan: 2214 }       
+           - { port: 15, vlan: 2215 }       
+           - { port: 16, vlan: 2216 }       
+           - { port: 17, vlan: 2217 }       
+           - { port: 18, vlan: 2218 }       
+           - { port: 19, vlan: 2219 }       
+           - { port: 20, vlan: 2220 }       
+           - { port: 21, vlan: 2221 }       
+           - { port: 22, vlan: 2222 }       
+              
+      
+      register: print_output
+
+    -  debug: var=print_output
+
+    - name: run commands that require answering a prompt
+      ios_command:
+       commands:
+       - command: 'copy running-config startup-config'
+         prompt: 'Destination filename startup-config?'
+         answer: 'y'
+
+
+      register: print_output
+    -  debug: var=print_output

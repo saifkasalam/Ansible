@@ -1,0 +1,104 @@
+---
+- name: Dlink Configuration
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: Configuring 7989-L1-as1
+      include_tasks: l1-as1.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as1'
+      
+
+    - name: Configuring 7989-l1-as2  
+      include_tasks: l1-as2.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as2'
+    
+    - name: Configuring 7989-l1-as3  
+      include_tasks: l1-as3.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as3'
+    
+    - name: Configuring 7989-L1-as4
+      include_tasks: l1-as4.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as4'
+
+
+    - name: Configuring 7989-l1-as5
+      include_tasks: l1-as5.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as5'
+
+    - name: Configuring 7989-l1-as6
+      include_tasks: l1-as6.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as6'      
+      
+    - name: Configuring 7989-L1-as7
+      include_tasks: l1-as7.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as7'
+
+    - name: Configuring 7989-l1-as8
+      include_tasks: l1-as8.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as8'
+
+    - name: Configuring 7989-l1-as9
+      include_tasks: l1-as9.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as9'
+
+    - name: Configuring 7989-L1-as10
+      include_tasks: l1-as10.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as10'
+
+
+    - name: Configuring 7989-l1-as11
+      include_tasks: l1-as11.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as11'
+
+    - name: Configuring 7989-l1-as12
+      include_tasks: l1-as12.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as12'
+
+    - name: Configuring 7989-l1-as13
+      include_tasks: l1-as13.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as13'
+      register: print_output
+
+    - name: Configuring 7989-l1-as14
+      include_tasks: l1-as14.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as14'
+
+    - name: Configuring 7989-l1-as15
+      include_tasks: l1-as15.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as15'
+
+    - name: Configuring 7989-l1-as16
+      include_tasks: l1-as16.yml
+      run_once: true
+      when: inventory_hostname == '7989-l1-as16'
+      register: print_output
+
+    -  debug: var=print_output
+
+    - name: run commands that require answering a prompt
+      ios_command:
+       commands:
+       - command: 'copy running-config startup-config'
+         prompt: 'Destination filename startup-config?'
+         answer: 'y'
+
+
+      register: print_output
+    -  debug: var=print_output
